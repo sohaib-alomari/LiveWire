@@ -9,14 +9,15 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:paddingBottom="50dp"
+        android:paddingBottom="10dp"
         android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/editText_Id"
             android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_marginRight="150dp"
-            android:layout_height="wrap_content"/>
+            android:hint="Search" />
 
         <Button
             android:id="@+id/searchButton_Id"
@@ -26,6 +27,13 @@
             android:text="Search" />
 
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_loading_indicator"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

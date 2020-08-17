@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageAdapter adapter;
     Button searchBtn;
     EditText editText;
+    private ProgressBar mLoadingIndicator;
 
 
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchBtn.setOnClickListener(this);
         editText=(EditText) findViewById(R.id.editText_Id);
         adapter=new ImageAdapter(this);
+
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
 
         recyclerView=(RecyclerView)findViewById(R.id.my_recycler_view);
@@ -59,10 +63,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public  void onClick(View view) {
-
+        mLoadingIndicator.setVisibility(View.VISIBLE);
         adapter.notifyDataSetChanged();
         recyclerView.invalidate();
         new imageQuery().execute();
+        if(ImageAdapter.list.size()==0)
+        {
+            Toast.makeText(this,"No Results Were Found Try a different Search Word",Toast.LENGTH_LONG).show();
+        }
 
 
     }
@@ -110,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            mLoadingIndicator.setVisibility(View.GONE);
             ImageAdapter.ExtractFeaturesFromJson(s);
 
 
